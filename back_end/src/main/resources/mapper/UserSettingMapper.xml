@@ -1,0 +1,313 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zeroyip.zero.mapper.UserSettingMapper" >
+  <resultMap id="BaseResultMap" type="com.zeroyip.zero.pojo.UserSetting" >
+    <id column="last_change_time" property="lastChangeTime" jdbcType="TIMESTAMP" />
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="language" property="language" jdbcType="VARCHAR" />
+    <result column="strating_page" property="stratingPage" jdbcType="VARCHAR" />
+    <result column="date_recognise" property="dateRecognise" jdbcType="VARCHAR" />
+    <result column="invite" property="invite" jdbcType="VARCHAR" />
+    <result column="date_format" property="dateFormat" jdbcType="VARCHAR" />
+    <result column="website_notice" property="websiteNotice" jdbcType="VARCHAR" />
+    <result column="notice_rule" property="noticeRule" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    last_change_time, user_email, language, strating_page, date_recognise, invite, date_format, 
+    website_notice, notice_rule
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zeroyip.zero.pojo.UserSettingExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.util.Date" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_setting
+    where last_change_time = #{lastChangeTime,jdbcType=TIMESTAMP}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.util.Date" >
+    delete from user_setting
+    where last_change_time = #{lastChangeTime,jdbcType=TIMESTAMP}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zeroyip.zero.pojo.UserSettingExample" >
+    delete from user_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zeroyip.zero.pojo.UserSetting" >
+    insert into user_setting (last_change_time, user_email, language, 
+      strating_page, date_recognise, invite, 
+      date_format, website_notice, notice_rule
+      )
+    values (#{lastChangeTime,jdbcType=TIMESTAMP}, #{userEmail,jdbcType=VARCHAR}, #{language,jdbcType=VARCHAR}, 
+      #{stratingPage,jdbcType=VARCHAR}, #{dateRecognise,jdbcType=VARCHAR}, #{invite,jdbcType=VARCHAR}, 
+      #{dateFormat,jdbcType=VARCHAR}, #{websiteNotice,jdbcType=VARCHAR}, #{noticeRule,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zeroyip.zero.pojo.UserSetting" >
+    insert into user_setting
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="lastChangeTime != null" >
+        last_change_time,
+      </if>
+      <if test="userEmail != null" >
+        user_email,
+      </if>
+      <if test="language != null" >
+        language,
+      </if>
+      <if test="stratingPage != null" >
+        strating_page,
+      </if>
+      <if test="dateRecognise != null" >
+        date_recognise,
+      </if>
+      <if test="invite != null" >
+        invite,
+      </if>
+      <if test="dateFormat != null" >
+        date_format,
+      </if>
+      <if test="websiteNotice != null" >
+        website_notice,
+      </if>
+      <if test="noticeRule != null" >
+        notice_rule,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="lastChangeTime != null" >
+        #{lastChangeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="stratingPage != null" >
+        #{stratingPage,jdbcType=VARCHAR},
+      </if>
+      <if test="dateRecognise != null" >
+        #{dateRecognise,jdbcType=VARCHAR},
+      </if>
+      <if test="invite != null" >
+        #{invite,jdbcType=VARCHAR},
+      </if>
+      <if test="dateFormat != null" >
+        #{dateFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="websiteNotice != null" >
+        #{websiteNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeRule != null" >
+        #{noticeRule,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zeroyip.zero.pojo.UserSettingExample" resultType="java.lang.Integer" >
+    select count(*) from user_setting
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user_setting
+    <set >
+      <if test="record.lastChangeTime != null" >
+        last_change_time = #{record.lastChangeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.userEmail != null" >
+        user_email = #{record.userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.language != null" >
+        language = #{record.language,jdbcType=VARCHAR},
+      </if>
+      <if test="record.stratingPage != null" >
+        strating_page = #{record.stratingPage,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dateRecognise != null" >
+        date_recognise = #{record.dateRecognise,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invite != null" >
+        invite = #{record.invite,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dateFormat != null" >
+        date_format = #{record.dateFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="record.websiteNotice != null" >
+        website_notice = #{record.websiteNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noticeRule != null" >
+        notice_rule = #{record.noticeRule,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user_setting
+    set last_change_time = #{record.lastChangeTime,jdbcType=TIMESTAMP},
+      user_email = #{record.userEmail,jdbcType=VARCHAR},
+      language = #{record.language,jdbcType=VARCHAR},
+      strating_page = #{record.stratingPage,jdbcType=VARCHAR},
+      date_recognise = #{record.dateRecognise,jdbcType=VARCHAR},
+      invite = #{record.invite,jdbcType=VARCHAR},
+      date_format = #{record.dateFormat,jdbcType=VARCHAR},
+      website_notice = #{record.websiteNotice,jdbcType=VARCHAR},
+      notice_rule = #{record.noticeRule,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zeroyip.zero.pojo.UserSetting" >
+    update user_setting
+    <set >
+      <if test="userEmail != null" >
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="language != null" >
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="stratingPage != null" >
+        strating_page = #{stratingPage,jdbcType=VARCHAR},
+      </if>
+      <if test="dateRecognise != null" >
+        date_recognise = #{dateRecognise,jdbcType=VARCHAR},
+      </if>
+      <if test="invite != null" >
+        invite = #{invite,jdbcType=VARCHAR},
+      </if>
+      <if test="dateFormat != null" >
+        date_format = #{dateFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="websiteNotice != null" >
+        website_notice = #{websiteNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeRule != null" >
+        notice_rule = #{noticeRule,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where last_change_time = #{lastChangeTime,jdbcType=TIMESTAMP}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zeroyip.zero.pojo.UserSetting" >
+    update user_setting
+    set user_email = #{userEmail,jdbcType=VARCHAR},
+      language = #{language,jdbcType=VARCHAR},
+      strating_page = #{stratingPage,jdbcType=VARCHAR},
+      date_recognise = #{dateRecognise,jdbcType=VARCHAR},
+      invite = #{invite,jdbcType=VARCHAR},
+      date_format = #{dateFormat,jdbcType=VARCHAR},
+      website_notice = #{websiteNotice,jdbcType=VARCHAR},
+      notice_rule = #{noticeRule,jdbcType=VARCHAR}
+    where last_change_time = #{lastChangeTime,jdbcType=TIMESTAMP}
+  </update>
+
+  <select id="findUserSetting" parameterType="java.lang.String" resultMap="BaseResultMap">
+        SELECT *
+        FROM user_setting
+        WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+  </select>
+
+  <update id="setUserSetting" parameterType="com.zeroyip.zero.pojo.UserSetting" >
+    update user_setting
+    <set >
+      <if test="lastChangeTime != null" >
+        last_change_time = #{lastChangeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="language != null" >
+        language = #{language,jdbcType=VARCHAR},
+      </if>
+      <if test="stratingPage != null" >
+        strating_page = #{stratingPage,jdbcType=VARCHAR},
+      </if>
+      <if test="dateRecognise != null" >
+        date_recognise = #{dateRecognise,jdbcType=VARCHAR},
+      </if>
+      <if test="invite != null" >
+        invite = #{invite,jdbcType=VARCHAR},
+      </if>
+      <if test="dateFormat != null" >
+        date_format = #{dateFormat,jdbcType=VARCHAR},
+      </if>
+      <if test="websiteNotice != null" >
+        website_notice = #{websiteNotice,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeRule != null" >
+        notice_rule = #{noticeRule,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_email = #{userEmail,jdbcType=VARCHAR}
+  </update>
+</mapper>

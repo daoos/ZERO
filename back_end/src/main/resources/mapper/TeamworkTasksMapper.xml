@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zeroyip.zero.mapper.TeamworkTasksMapper" >
+  <resultMap id="BaseResultMap" type="com.zeroyip.zero.pojo.TeamworkTasks" >
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="user_avatar_path" property="userAvatarPath" jdbcType="VARCHAR" />
+    <result column="task_num" property="taskNum" jdbcType="INTEGER" />
+    <result column="group_num" property="groupNum" jdbcType="INTEGER" />
+    <result column="task_create_time" property="taskCreateTime" jdbcType="DATE" />
+    <result column="task_content" property="taskContent" jdbcType="VARCHAR" />
+    <result column="task_trustee" property="taskTrustee" jdbcType="VARCHAR" />
+    <result column="task_finished_time" property="taskFinishedTime" jdbcType="TIMESTAMP" />
+    <result column="task_finished" property="taskFinished" jdbcType="VARCHAR" />
+    <result column="task_expired" property="taskExpired" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="listOtherTask" resultMap="BaseResultMap" >
+    SELECT U.user_email, U.user_avatar_path, T.task_num, T.group_num, T.task_create_time, T.task_content, T.task_trustee, T.task_finished_time, T.task_finished, T.task_expired
+    FROM user AS U, teamwork_task AS T
+    WHERE T.group_num = #{groupNum,jdbcType=INTEGER}
+      AND U.user_email = T.task_trustee
+      AND T.task_trustee != #{userEmail,jdbcType=VARCHAR}
+      AND T.task_finished = 'N'
+      AND T.task_expired = 'N'
+    ORDER BY T.task_trustee != #{userEmail,jdbcType=VARCHAR}
+  </select>
+</mapper>

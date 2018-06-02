@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zeroyip.zero.mapper.NotificationMapper" >
+  <resultMap id="BaseResultMap" type="com.zeroyip.zero.pojo.Notification" >
+    <id column="notice_num" property="noticeNum" jdbcType="INTEGER" />
+    <result column="manager_id" property="managerId" jdbcType="VARCHAR" />
+    <result column="notice_send_time" property="noticeSendTime" jdbcType="DATE" />
+    <result column="notice_title" property="noticeTitle" jdbcType="VARCHAR" />
+    <result column="notice_content" property="noticeContent" jdbcType="VARCHAR" />
+    <result column="notice_receiver" property="noticeReceiver" jdbcType="VARCHAR" />
+    <result column="notice_read" property="noticeRead" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    notice_num, manager_id, notice_send_time, notice_title, notice_content, notice_receiver, 
+    notice_read
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zeroyip.zero.pojo.NotificationExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from notification
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from notification
+    where notice_num = #{noticeNum,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from notification
+    where notice_num = #{noticeNum,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zeroyip.zero.pojo.NotificationExample" >
+    delete from notification
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zeroyip.zero.pojo.Notification" >
+    insert into notification (notice_num, manager_id, notice_send_time, 
+      notice_title, notice_content, notice_receiver, 
+      notice_read)
+    values (#{noticeNum,jdbcType=INTEGER}, #{managerId,jdbcType=VARCHAR}, #{noticeSendTime,jdbcType=DATE}, 
+      #{noticeTitle,jdbcType=VARCHAR}, #{noticeContent,jdbcType=VARCHAR}, #{noticeReceiver,jdbcType=VARCHAR}, 
+      #{noticeRead,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zeroyip.zero.pojo.Notification" >
+    insert into notification
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="noticeNum != null" >
+        notice_num,
+      </if>
+      <if test="managerId != null" >
+        manager_id,
+      </if>
+      <if test="noticeSendTime != null" >
+        notice_send_time,
+      </if>
+      <if test="noticeTitle != null" >
+        notice_title,
+      </if>
+      <if test="noticeContent != null" >
+        notice_content,
+      </if>
+      <if test="noticeReceiver != null" >
+        notice_receiver,
+      </if>
+      <if test="noticeRead != null" >
+        notice_read,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="noticeNum != null" >
+        #{noticeNum,jdbcType=INTEGER},
+      </if>
+      <if test="managerId != null" >
+        #{managerId,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeSendTime != null" >
+        #{noticeSendTime,jdbcType=DATE},
+      </if>
+      <if test="noticeTitle != null" >
+        #{noticeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeContent != null" >
+        #{noticeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeReceiver != null" >
+        #{noticeReceiver,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeRead != null" >
+        #{noticeRead,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zeroyip.zero.pojo.NotificationExample" resultType="java.lang.Integer" >
+    select count(*) from notification
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update notification
+    <set >
+      <if test="record.noticeNum != null" >
+        notice_num = #{record.noticeNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.managerId != null" >
+        manager_id = #{record.managerId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noticeSendTime != null" >
+        notice_send_time = #{record.noticeSendTime,jdbcType=DATE},
+      </if>
+      <if test="record.noticeTitle != null" >
+        notice_title = #{record.noticeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noticeContent != null" >
+        notice_content = #{record.noticeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noticeReceiver != null" >
+        notice_receiver = #{record.noticeReceiver,jdbcType=VARCHAR},
+      </if>
+      <if test="record.noticeRead != null" >
+        notice_read = #{record.noticeRead,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update notification
+    set notice_num = #{record.noticeNum,jdbcType=INTEGER},
+      manager_id = #{record.managerId,jdbcType=VARCHAR},
+      notice_send_time = #{record.noticeSendTime,jdbcType=DATE},
+      notice_title = #{record.noticeTitle,jdbcType=VARCHAR},
+      notice_content = #{record.noticeContent,jdbcType=VARCHAR},
+      notice_receiver = #{record.noticeReceiver,jdbcType=VARCHAR},
+      notice_read = #{record.noticeRead,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zeroyip.zero.pojo.Notification" >
+    update notification
+    <set >
+      <if test="managerId != null" >
+        manager_id = #{managerId,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeSendTime != null" >
+        notice_send_time = #{noticeSendTime,jdbcType=DATE},
+      </if>
+      <if test="noticeTitle != null" >
+        notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeContent != null" >
+        notice_content = #{noticeContent,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeReceiver != null" >
+        notice_receiver = #{noticeReceiver,jdbcType=VARCHAR},
+      </if>
+      <if test="noticeRead != null" >
+        notice_read = #{noticeRead,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where notice_num = #{noticeNum,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zeroyip.zero.pojo.Notification" >
+    update notification
+    set manager_id = #{managerId,jdbcType=VARCHAR},
+      notice_send_time = #{noticeSendTime,jdbcType=DATE},
+      notice_title = #{noticeTitle,jdbcType=VARCHAR},
+      notice_content = #{noticeContent,jdbcType=VARCHAR},
+      notice_receiver = #{noticeReceiver,jdbcType=VARCHAR},
+      notice_read = #{noticeRead,jdbcType=VARCHAR}
+    where notice_num = #{noticeNum,jdbcType=INTEGER}
+  </update>
+
+  <insert id="sendNotice" >
+    INSERT INTO notification ( manager_id, notice_send_time,
+      notice_title, notice_content, notice_receiver)
+    VALUES (#{managerId,jdbcType=VARCHAR}, #{noticeSendTime,jdbcType=DATE},
+      #{noticeTitle,jdbcType=VARCHAR}, #{noticeContent,jdbcType=VARCHAR}, #{noticeReceiver,jdbcType=VARCHAR} )
+  </insert>
+
+  <select id="getNotice" parameterType="java.lang.String" resultMap="BaseResultMap" >
+    SELECT notice_num, notice_title, notice_content, notice_read
+    FROM notification
+    WHERE notice_receiver = #{userEmail,jdbcType=VARCHAR}
+    ORDER BY notice_send_time
+  </select>
+
+  <select id="getNoticeUnread" parameterType="java.lang.String" resultType="java.lang.Integer" >
+    SELECT
+    COUNT(notice_read)
+    FROM notification
+    WHERE notice_read = "N"
+      AND notice_receiver = #{userEmail,jdbcType=VARCHAR}
+  </select>
+
+  <update id="readNotice" >
+    UPDATE notification
+    SET notice_read = "Y"
+    WHERE notice_num = #{noticeNum,jdbcType=INTEGER}
+  </update>
+
+  <update id="readAllNotification" >
+    UPDATE notification
+    SET notice_read = "Y"
+    WHERE notice_receiver = #{userEmail,jdbcType=VARCHAR}
+  </update>
+</mapper>

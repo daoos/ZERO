@@ -1,0 +1,261 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zeroyip.zero.mapper.TeamworkMemberMapper" >
+  <resultMap id="BaseResultMap" type="com.zeroyip.zero.pojo.TeamworkMember" >
+    <id column="member_num" property="memberNum" jdbcType="INTEGER" />
+    <result column="group_num" property="groupNum" jdbcType="INTEGER" />
+    <result column="group_name" property="groupName" jdbcType="VARCHAR" />
+    <result column="group_member" property="groupMember" jdbcType="VARCHAR" />
+    <result column="member_role" property="memberRole" jdbcType="VARCHAR" />
+    <result column="member_permission" property="memberPermission" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    member_num, group_num, group_name, group_member, member_role, member_permission
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zeroyip.zero.pojo.TeamworkMemberExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from teamwork_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from teamwork_member
+    where member_num = #{memberNum,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from teamwork_member
+    where member_num = #{memberNum,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zeroyip.zero.pojo.TeamworkMemberExample" >
+    delete from teamwork_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zeroyip.zero.pojo.TeamworkMember" >
+    insert into teamwork_member (member_num, group_num, group_name, 
+      group_member, member_role, member_permission
+      )
+    values (#{memberNum,jdbcType=INTEGER}, #{groupNum,jdbcType=INTEGER}, #{groupName,jdbcType=VARCHAR}, 
+      #{groupMember,jdbcType=VARCHAR}, #{memberRole,jdbcType=VARCHAR}, #{memberPermission,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zeroyip.zero.pojo.TeamworkMember" >
+    insert into teamwork_member
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="memberNum != null" >
+        member_num,
+      </if>
+      <if test="groupNum != null" >
+        group_num,
+      </if>
+      <if test="groupName != null" >
+        group_name,
+      </if>
+      <if test="groupMember != null" >
+        group_member,
+      </if>
+      <if test="memberRole != null" >
+        member_role,
+      </if>
+      <if test="memberPermission != null" >
+        member_permission,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="memberNum != null" >
+        #{memberNum,jdbcType=INTEGER},
+      </if>
+      <if test="groupNum != null" >
+        #{groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="groupName != null" >
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupMember != null" >
+        #{groupMember,jdbcType=VARCHAR},
+      </if>
+      <if test="memberRole != null" >
+        #{memberRole,jdbcType=VARCHAR},
+      </if>
+      <if test="memberPermission != null" >
+        #{memberPermission,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zeroyip.zero.pojo.TeamworkMemberExample" resultType="java.lang.Integer" >
+    select count(*) from teamwork_member
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update teamwork_member
+    <set >
+      <if test="record.memberNum != null" >
+        member_num = #{record.memberNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupNum != null" >
+        group_num = #{record.groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupName != null" >
+        group_name = #{record.groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupMember != null" >
+        group_member = #{record.groupMember,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberRole != null" >
+        member_role = #{record.memberRole,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memberPermission != null" >
+        member_permission = #{record.memberPermission,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update teamwork_member
+    set member_num = #{record.memberNum,jdbcType=INTEGER},
+      group_num = #{record.groupNum,jdbcType=INTEGER},
+      group_name = #{record.groupName,jdbcType=VARCHAR},
+      group_member = #{record.groupMember,jdbcType=VARCHAR},
+      member_role = #{record.memberRole,jdbcType=VARCHAR},
+      member_permission = #{record.memberPermission,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zeroyip.zero.pojo.TeamworkMember" >
+    update teamwork_member
+    <set >
+      <if test="groupNum != null" >
+        group_num = #{groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="groupName != null" >
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+      <if test="groupMember != null" >
+        group_member = #{groupMember,jdbcType=VARCHAR},
+      </if>
+      <if test="memberRole != null" >
+        member_role = #{memberRole,jdbcType=VARCHAR},
+      </if>
+      <if test="memberPermission != null" >
+        member_permission = #{memberPermission,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where member_num = #{memberNum,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zeroyip.zero.pojo.TeamworkMember" >
+    update teamwork_member
+    set group_num = #{groupNum,jdbcType=INTEGER},
+      group_name = #{groupName,jdbcType=VARCHAR},
+      group_member = #{groupMember,jdbcType=VARCHAR},
+      member_role = #{memberRole,jdbcType=VARCHAR},
+      member_permission = #{memberPermission,jdbcType=VARCHAR}
+    where member_num = #{memberNum,jdbcType=INTEGER}
+  </update>
+
+  <select id="listPermission" resultType="java.lang.String" >
+    SELECT member_permission
+    FROM teamwork_member
+    WHERE group_num = #{groupNum,jdbcType=INTEGER}
+      AND  group_member = #{userEmail,jdbcType=INTEGER}
+  </select>
+
+  <insert id="addManager" >
+    INSERT INTO teamwork_member (group_name, group_num, group_member,
+      member_role, member_permission)
+    VALUES (#{groupName,jdbcType=VARCHAR}, #{groupNum,jdbcType=INTEGER}, #{groupMember,jdbcType=VARCHAR},
+      "manager", "all")
+  </insert>
+
+  <insert id="addMember" >
+    INSERT INTO teamwork_member (group_num, group_name,  group_member)
+    VALUES (#{groupNum,jdbcType=INTEGER}, #{groupName,jdbcType=VARCHAR},
+      #{groupMember,jdbcType=VARCHAR})
+  </insert>
+
+  <delete id="removeMember" >
+    DELETE
+    FROM teamwork_member
+    WHERE group_num = #{groupNum,jdbcType=INTEGER} AND member_num = #{memberNum,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="quitGroup" >
+    DELETE
+    FROM teamwork_member
+    WHERE group_num = #{groupNum,jdbcType=INTEGER}
+      AND group_member =  #{userEmail,jdbcType=VARCHAR}
+  </delete>
+</mapper>

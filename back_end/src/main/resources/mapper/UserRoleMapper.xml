@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zeroyip.zero.mapper.UserRoleMapper" >
+  <resultMap id="BaseResultMap" type="com.zeroyip.zero.pojo.UserRole" >
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="user_psw" property="userPsw" jdbcType="VARCHAR" />
+    <result column="group_num" property="groupNum" jdbcType="INTEGER" />
+    <result column="member_role" property="memberRole" jdbcType="VARCHAR" />
+    <result column="member_permission" property="memberPermission" jdbcType="VARCHAR" />
+  </resultMap>
+
+  <select id="identification" parameterType="java.lang.String" resultMap="BaseResultMap">
+      SELECT user.user_email, user.user_psw, teamwork_member.group_num, teamwork_member.member_role, teamwork_member.member_permission
+      FROM user, teamwork_member
+      WHERE user.user_email = #{userEmail,jdbcType=VARCHAR}
+        AND user.user_email = teamwork_member.group_member
+  </select>
+</mapper>

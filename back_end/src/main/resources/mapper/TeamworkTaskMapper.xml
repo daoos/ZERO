@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zeroyip.zero.mapper.TeamworkTaskMapper" >
+  <resultMap id="BaseResultMap" type="com.zeroyip.zero.pojo.TeamworkTask" >
+    <id column="task_num" property="taskNum" jdbcType="INTEGER" />
+    <result column="group_num" property="groupNum" jdbcType="INTEGER" />
+    <result column="task_create_time" property="taskCreateTime" jdbcType="DATE" />
+    <result column="task_content" property="taskContent" jdbcType="VARCHAR" />
+    <result column="task_trustee" property="taskTrustee" jdbcType="VARCHAR" />
+    <result column="task_finished_time" property="taskFinishedTime" jdbcType="TIMESTAMP" />
+    <result column="task_finished" property="taskFinished" jdbcType="VARCHAR" />
+    <result column="task_expired" property="taskExpired" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    task_num, group_num, task_create_time, task_content, task_trustee, task_finished_time, 
+    task_finished, task_expired
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zeroyip.zero.pojo.TeamworkTaskExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from teamwork_task
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from teamwork_task
+    where task_num = #{taskNum,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from teamwork_task
+    where task_num = #{taskNum,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zeroyip.zero.pojo.TeamworkTaskExample" >
+    delete from teamwork_task
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zeroyip.zero.pojo.TeamworkTask" >
+    insert into teamwork_task (task_num, group_num, task_create_time, 
+      task_content, task_trustee, task_finished_time, 
+      task_finished, task_expired)
+    values (#{taskNum,jdbcType=INTEGER}, #{groupNum,jdbcType=INTEGER}, #{taskCreateTime,jdbcType=DATE},
+      #{taskContent,jdbcType=VARCHAR}, #{taskTrustee,jdbcType=VARCHAR}, #{taskFinishedTime,jdbcType=TIMESTAMP}, 
+      #{taskFinished,jdbcType=VARCHAR}, #{taskExpired,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zeroyip.zero.pojo.TeamworkTask" >
+    insert into teamwork_task
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="taskNum != null" >
+        task_num,
+      </if>
+      <if test="groupNum != null" >
+        group_num,
+      </if>
+      <if test="taskCreateTime != null" >
+        task_create_time,
+      </if>
+      <if test="taskContent != null" >
+        task_content,
+      </if>
+      <if test="taskTrustee != null" >
+        task_trustee,
+      </if>
+      <if test="taskFinishedTime != null" >
+        task_finished_time,
+      </if>
+      <if test="taskFinished != null" >
+        task_finished,
+      </if>
+      <if test="taskExpired != null" >
+        task_expired,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="taskNum != null" >
+        #{taskNum,jdbcType=INTEGER},
+      </if>
+      <if test="groupNum != null" >
+        #{groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="taskCreateTime != null" >
+        #{taskCreateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskContent != null" >
+        #{taskContent,jdbcType=VARCHAR},
+      </if>
+      <if test="taskTrustee != null" >
+        #{taskTrustee,jdbcType=VARCHAR},
+      </if>
+      <if test="taskFinishedTime != null" >
+        #{taskFinishedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskFinished != null" >
+        #{taskFinished,jdbcType=VARCHAR},
+      </if>
+      <if test="taskExpired != null" >
+        #{taskExpired,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zeroyip.zero.pojo.TeamworkTaskExample" resultType="java.lang.Integer" >
+    select count(*) from teamwork_task
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update teamwork_task
+    <set >
+      <if test="record.taskNum != null" >
+        task_num = #{record.taskNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupNum != null" >
+        group_num = #{record.groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.taskCreateTime != null" >
+        task_create_time = #{record.taskCreateTime,jdbcType=DATE},
+      </if>
+      <if test="record.taskContent != null" >
+        task_content = #{record.taskContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskTrustee != null" >
+        task_trustee = #{record.taskTrustee,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskFinishedTime != null" >
+        task_finished_time = #{record.taskFinishedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.taskFinished != null" >
+        task_finished = #{record.taskFinished,jdbcType=VARCHAR},
+      </if>
+      <if test="record.taskExpired != null" >
+        task_expired = #{record.taskExpired,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update teamwork_task
+    set task_num = #{record.taskNum,jdbcType=INTEGER},
+      group_num = #{record.groupNum,jdbcType=INTEGER},
+      task_create_time = #{record.taskCreateTime,jdbcType=DATE},
+      task_content = #{record.taskContent,jdbcType=VARCHAR},
+      task_trustee = #{record.taskTrustee,jdbcType=VARCHAR},
+      task_finished_time = #{record.taskFinishedTime,jdbcType=TIMESTAMP},
+      task_finished = #{record.taskFinished,jdbcType=VARCHAR},
+      task_expired = #{record.taskExpired,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zeroyip.zero.pojo.TeamworkTask" >
+    update teamwork_task
+    <set >
+      <if test="groupNum != null" >
+        group_num = #{groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="taskCreateTime != null" >
+        task_create_time = #{taskCreateTime,jdbcType=DATE},
+      </if>
+      <if test="taskContent != null" >
+        task_content = #{taskContent,jdbcType=VARCHAR},
+      </if>
+      <if test="taskTrustee != null" >
+        task_trustee = #{taskTrustee,jdbcType=VARCHAR},
+      </if>
+      <if test="taskFinishedTime != null" >
+        task_finished_time = #{taskFinishedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="taskFinished != null" >
+        task_finished = #{taskFinished,jdbcType=VARCHAR},
+      </if>
+      <if test="taskExpired != null" >
+        task_expired = #{taskExpired,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where task_num = #{taskNum,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zeroyip.zero.pojo.TeamworkTask" >
+    update teamwork_task
+    set group_num = #{groupNum,jdbcType=INTEGER},
+      task_create_time = #{taskCreateTime,jdbcType=DATE},
+      task_content = #{taskContent,jdbcType=VARCHAR},
+      task_trustee = #{taskTrustee,jdbcType=VARCHAR},
+      task_finished_time = #{taskFinishedTime,jdbcType=TIMESTAMP},
+      task_finished = #{taskFinished,jdbcType=VARCHAR},
+      task_expired = #{taskExpired,jdbcType=VARCHAR}
+    where task_num = #{taskNum,jdbcType=INTEGER}
+  </update>
+
+  <select id="listMyTask" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM teamwork_task
+    WHERE group_num = #{groupNum,jdbcType=INTEGER}
+    AND task_trustee = #{userEmail,jdbcType=VARCHAR}
+    AND task_finished = 'N'
+    AND task_expired = 'N'
+  </select>
+
+  <select id="listOtherTask" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM teamwork_task
+    WHERE group_num = #{groupNum,jdbcType=INTEGER}
+    AND task_trustee != #{userEmail,jdbcType=VARCHAR}
+    AND task_finished = 'N'
+    AND task_expired = 'N'
+    ORDER BY task_trustee != #{userEmail,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="addTask" parameterType="com.zeroyip.zero.pojo.TeamworkTask" >
+    INSERT INTO teamwork_task (group_num, task_create_time, task_content, task_trustee)
+    VALUES (#{groupNum,jdbcType=INTEGER}, #{taskCreateTime,jdbcType=DATE}, #{taskContent,jdbcType=VARCHAR}, #{taskTrustee,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="finishTask" parameterType="java.lang.Integer" >
+    UPDATE teamwork_task
+    SET task_finished = 'Y'
+    WHERE task_num = #{taskNum,jdbcType=INTEGER}
+  </update>
+
+  <delete id="removeTask" >
+    DELETE
+    FROM teamwork_task
+    WHERE task_num = #{taskNum,jdbcType=INTEGER}
+  </delete>
+</mapper>

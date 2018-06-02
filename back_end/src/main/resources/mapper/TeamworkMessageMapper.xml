@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zeroyip.zero.mapper.TeamworkMessageMapper" >
+  <resultMap id="BaseResultMap" type="com.zeroyip.zero.pojo.TeamworkMessage" >
+    <id column="mess_num" property="messNum" jdbcType="INTEGER" />
+    <result column="group_num" property="groupNum" jdbcType="INTEGER" />
+    <result column="mess_time" property="messTime" jdbcType="TIMESTAMP" />
+    <result column="mess_initiator" property="messInitiator" jdbcType="VARCHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    mess_num, group_num, mess_time, mess_initiator, message
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zeroyip.zero.pojo.TeamworkMessageExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from teamwork_message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from teamwork_message
+    where mess_num = #{messNum,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from teamwork_message
+    where mess_num = #{messNum,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zeroyip.zero.pojo.TeamworkMessageExample" >
+    delete from teamwork_message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zeroyip.zero.pojo.TeamworkMessage" >
+    insert into teamwork_message (mess_num, group_num, mess_time, 
+      mess_initiator, message)
+    values (#{messNum,jdbcType=INTEGER}, #{groupNum,jdbcType=INTEGER}, #{messTime,jdbcType=TIMESTAMP}, 
+      #{messInitiator,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zeroyip.zero.pojo.TeamworkMessage" >
+    insert into teamwork_message
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="messNum != null" >
+        mess_num,
+      </if>
+      <if test="groupNum != null" >
+        group_num,
+      </if>
+      <if test="messTime != null" >
+        mess_time,
+      </if>
+      <if test="messInitiator != null" >
+        mess_initiator,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="messNum != null" >
+        #{messNum,jdbcType=INTEGER},
+      </if>
+      <if test="groupNum != null" >
+        #{groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="messTime != null" >
+        #{messTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messInitiator != null" >
+        #{messInitiator,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        #{message,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zeroyip.zero.pojo.TeamworkMessageExample" resultType="java.lang.Integer" >
+    select count(*) from teamwork_message
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update teamwork_message
+    <set >
+      <if test="record.messNum != null" >
+        mess_num = #{record.messNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupNum != null" >
+        group_num = #{record.groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.messTime != null" >
+        mess_time = #{record.messTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.messInitiator != null" >
+        mess_initiator = #{record.messInitiator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.message != null" >
+        message = #{record.message,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update teamwork_message
+    set mess_num = #{record.messNum,jdbcType=INTEGER},
+      group_num = #{record.groupNum,jdbcType=INTEGER},
+      mess_time = #{record.messTime,jdbcType=TIMESTAMP},
+      mess_initiator = #{record.messInitiator,jdbcType=VARCHAR},
+      message = #{record.message,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zeroyip.zero.pojo.TeamworkMessage" >
+    update teamwork_message
+    <set >
+      <if test="groupNum != null" >
+        group_num = #{groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="messTime != null" >
+        mess_time = #{messTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="messInitiator != null" >
+        mess_initiator = #{messInitiator,jdbcType=VARCHAR},
+      </if>
+      <if test="message != null" >
+        message = #{message,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mess_num = #{messNum,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zeroyip.zero.pojo.TeamworkMessage" >
+    update teamwork_message
+    set group_num = #{groupNum,jdbcType=INTEGER},
+      mess_time = #{messTime,jdbcType=TIMESTAMP},
+      mess_initiator = #{messInitiator,jdbcType=VARCHAR},
+      message = #{message,jdbcType=VARCHAR}
+    where mess_num = #{messNum,jdbcType=INTEGER}
+  </update>
+
+  <insert id="sendMessage" parameterType="com.zeroyip.zero.pojo.TeamworkMessage" >
+    INSERT INTO teamwork_message (group_num, mess_time,
+      mess_initiator, message)
+    VALUES (#{groupNum,jdbcType=INTEGER}, #{messTime,jdbcType=TIMESTAMP},
+      #{messInitiator,jdbcType=VARCHAR}, #{message,jdbcType=VARCHAR})
+  </insert>
+</mapper>

@@ -1,0 +1,315 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zeroyip.zero.mapper.UserMapper" >
+  <resultMap id="BaseResultMap" type="com.zeroyip.zero.pojo.User" >
+    <id column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="user_create_time" property="userCreateTime" jdbcType="DATE" />
+    <result column="user_psw" property="userPsw" jdbcType="VARCHAR" />
+    <result column="user_phone" property="userPhone" jdbcType="VARCHAR" />
+    <result column="user_name" property="userName" jdbcType="VARCHAR" />
+    <result column="user_avatar_path" property="userAvatarPath" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    user_email, user_create_time, user_psw, user_phone, user_name, user_avatar_path
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zeroyip.zero.pojo.UserExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where user_email = #{userEmail,jdbcType=VARCHAR}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.String" >
+    delete from user
+    where user_email = #{userEmail,jdbcType=VARCHAR}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zeroyip.zero.pojo.UserExample" >
+    delete from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zeroyip.zero.pojo.User" >
+    insert into user (user_email, user_create_time, user_psw, 
+      user_phone, user_name, user_avatar_path
+      )
+    values (#{userEmail,jdbcType=VARCHAR}, #{userCreateTime,jdbcType=DATE}, #{userPsw,jdbcType=VARCHAR}, 
+      #{userPhone,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userAvatarPath,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zeroyip.zero.pojo.User" >
+    insert into user
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="userEmail != null" >
+        user_email,
+      </if>
+      <if test="userCreateTime != null" >
+        user_create_time,
+      </if>
+      <if test="userPsw != null" >
+        user_psw,
+      </if>
+      <if test="userPhone != null" >
+        user_phone,
+      </if>
+      <if test="userName != null" >
+        user_name,
+      </if>
+      <if test="userAvatarPath != null" >
+        user_avatar_path,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="userCreateTime != null" >
+        #{userCreateTime,jdbcType=DATE},
+      </if>
+      <if test="userPsw != null" >
+        #{userPsw,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userAvatarPath != null" >
+        #{userAvatarPath,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zeroyip.zero.pojo.UserExample" resultType="java.lang.Integer" >
+    select count(*) from user
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update user
+    <set >
+      <if test="record.userEmail != null" >
+        user_email = #{record.userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userCreateTime != null" >
+        user_create_time = #{record.userCreateTime,jdbcType=DATE},
+      </if>
+      <if test="record.userPsw != null" >
+        user_psw = #{record.userPsw,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userPhone != null" >
+        user_phone = #{record.userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userName != null" >
+        user_name = #{record.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.userAvatarPath != null" >
+        user_avatar_path = #{record.userAvatarPath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update user
+    set user_email = #{record.userEmail,jdbcType=VARCHAR},
+      user_create_time = #{record.userCreateTime,jdbcType=DATE},
+      user_psw = #{record.userPsw,jdbcType=VARCHAR},
+      user_phone = #{record.userPhone,jdbcType=VARCHAR},
+      user_name = #{record.userName,jdbcType=VARCHAR},
+      user_avatar_path = #{record.userAvatarPath,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zeroyip.zero.pojo.User" >
+    update user
+    <set >
+      <if test="userCreateTime != null" >
+        user_create_time = #{userCreateTime,jdbcType=DATE},
+      </if>
+      <if test="userPsw != null" >
+        user_psw = #{userPsw,jdbcType=VARCHAR},
+      </if>
+      <if test="userPhone != null" >
+        user_phone = #{userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="userName != null" >
+        user_name = #{userName,jdbcType=VARCHAR},
+      </if>
+      <if test="userAvatarPath != null" >
+        user_avatar_path = #{userAvatarPath,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where user_email = #{userEmail,jdbcType=VARCHAR}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zeroyip.zero.pojo.User" >
+    update user
+    set user_create_time = #{userCreateTime,jdbcType=DATE},
+      user_psw = #{userPsw,jdbcType=VARCHAR},
+      user_phone = #{userPhone,jdbcType=VARCHAR},
+      user_name = #{userName,jdbcType=VARCHAR},
+      user_avatar_path = #{userAvatarPath,jdbcType=VARCHAR}
+    where user_email = #{userEmail,jdbcType=VARCHAR}
+  </update>
+
+  <select id="login" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT *
+    FROM user
+    WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+      AND user_psw = #{userPsw,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="createUser" parameterType="com.zeroyip.zero.pojo.User">
+    INSERT INTO user (user_email, user_create_time, user_psw,
+      user_phone, user_name, user_avatar_path
+      )
+    VALUES (#{userEmail,jdbcType=VARCHAR}, #{userCreateTime,jdbcType=DATE}, #{userPsw,jdbcType=VARCHAR},
+      #{userPhone,jdbcType=VARCHAR}, #{userName,jdbcType=VARCHAR}, #{userAvatarPath,jdbcType=VARCHAR}
+      )
+  </insert>
+
+  <select id="findUser" parameterType="java.lang.String" resultMap="BaseResultMap">
+      SELECT *
+      FROM user
+      WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+  </select>
+
+  <select id="findUserInfo" parameterType="java.lang.String" resultMap="BaseResultMap">
+      SELECT *
+      FROM user
+      WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+  </select>
+
+  <select id="findAllUser" resultMap="BaseResultMap">
+    SELECT user_email, user_name, user_phone
+    FROM user
+  </select>
+
+  <select id="findUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+      SELECT *
+      FROM user
+      WHERE user_name = #{userName,jdbcType=VARCHAR}
+  </select>
+
+  <update id="modifyPsw" parameterType="com.zeroyip.zero.pojo.User">
+    UPDATE user
+    <set>
+      <if test="userPsw != null">
+        user_psw = #{userPsw,jdbcType=VARCHAR}
+      </if>
+    </set>
+    WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+  </update>
+
+  <update id="resetPsw" parameterType="com.zeroyip.zero.pojo.User">
+    UPDATE user
+    <set>
+      <if test="userPsw != null">
+        user_psw = #{userPsw,jdbcType=VARCHAR}
+      </if>
+    </set>
+    WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+  </update>
+
+  <update id="modify" parameterType="com.zeroyip.zero.pojo.User">
+    UPDATE user
+    <set>
+      <if test="user.userEmail != null">
+        user_email = #{user.userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="user.userPsw != null">
+        user_psw = #{user.userPsw,jdbcType=VARCHAR},
+      </if>
+      <if test="user.userPhone != null">
+        user_phone = #{user.userPhone,jdbcType=VARCHAR},
+      </if>
+      <if test="user.userName != null">
+        user_name = #{user.userName,jdbcType=VARCHAR},
+      </if>
+      <if test="user.userAvatarPath != null">
+        user_avatar_path = #{user.userAvatarPath,jdbcType=VARCHAR}
+      </if>
+    </set>
+    WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+  </update>
+
+  <delete id="deleteUser" parameterType="java.lang.String">
+      DELETE
+      FROM user
+      WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+  </delete>
+</mapper>

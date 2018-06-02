@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+               "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <!-- 指定数据库JDBC驱动包的位置 -->
+    <!-- 根据情况配置 -->
+    <classPathEntry location="*" />
+
+    <context id="ZeroDBTables" targetRuntime="MyBatis3">
+        <!-- 是否允许自动识别数据库关键字(默认为"false"。若为"true",则根据SqlReservedWords中定义的关键字列表) -->
+        <property name="autoDelimitKeywords" value="false" />
+        <!-- 设置生成的Java文件的编码 -->
+        <property name="javaFileEncoding" value="UTF-8" />
+        <!-- 是否允许格式化生成java文件的代码 -->
+        <property name="javaFormatter" value="org.mybatis.generator.api.dom.DefaultJavaFormatter" />
+        <!-- 是否允许格式化生成xml文件的代码 -->
+        <property name="xmlFormatter" value="org.mybatis.generator.api.dom.DefaultXmlFormatter" />
+        <!-- 指定数据库用于标记数据库对象名的符号(在Oracle中使用双引号;在MySQL中使用反引号) -->
+        <property name="beginningDelimiter" value="`" />
+        <property name="endingDelimiter" value="`" />
+
+        <commentGenerator>
+            <!-- 指定在创建class时，是否对其注释进行控制 -->
+            <property name="suppressDate" value="true" />
+            <!-- 是否去除自动生成的注释 -->
+            <property name="suppressAllComments" value="true" />
+        </commentGenerator>
+        <!-- 根据情况配置 -->
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost:3306/*?characterEncoding=UTF-8"
+                        userId="*"
+                        password="*">
+        </jdbcConnection>
+        <!-- 是否将JDBC DECIMAL和NUMERIC类型解析为Integer，为"true"时将其解析为java.math.BigDecimal -->
+        <javaTypeResolver type="org.mybatis.generator.internal.types.JavaTypeResolverDefaultImpl">
+            <!--
+                  scale>0 ; length>18：使用BigDecimal;
+                  scale=0 ; length[10,18]：使用Long；
+                  scale=0 ; length[5,9]：使用Integer；
+                  scale=0 ; length<5：使用Short；
+            -->
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+        <!-- 设置生成的Mapper类的存放位置 -->
+        <javaModelGenerator targetPackage="com.zeroyip.zero.pojo" targetProject="src\main\java">
+            <!-- 是否允许schema作为包的后缀 -->
+            <property name="enableSubPackages" value="false" />
+            <!-- 是否允许从数据库所返回的值的前后空格被清除 -->
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+        <!-- 设置生成的Mapper映射文件的存放位置 -->
+        <sqlMapGenerator targetPackage="mapper" targetProject="src\main\resources">
+            <property name="enableSubPackages" value="false" />
+        </sqlMapGenerator>
+        <!-- 设置生成的Mapper接口的存放位置 -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.zeroyip.zero.mapper"  targetProject="src\main\java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+
+        <!-- 指定所操作的数据库表 -->
+        <table tableName="manager"
+               domainObjectName="Manager">
+            <!-- 是否允许使用"驼峰命名法"重命名(若为"true" ,生成的model类将直接使用表的column的名称，不再使用"驼峰命名法") -->
+            <!--<property name="useActualColumnNames" value="false" />-->
+            <!--
+                  是否允许根据表中列名计算对象属性名之前先重命名列名[适用于表中列名含有公共的前缀字符串]
+                  如：user_email,user_psw,user_phone将被重命名为email,psw,phone
+            -->
+            <!--<columnRenamingRule searchString="^manager_" replaceString="" />-->
+        </table>
+        <table tableName="filter"
+               domainObjectName="Filter">
+        </table>
+        <table tableName="notification"
+               domainObjectName="Notification">
+        </table>
+        <table tableName="user"
+               domainObjectName="User">
+        </table>
+        <table tableName="memorandum"
+               domainObjectName="Memorandum">
+        </table>
+        <table tableName="todo"
+               domainObjectName="Todo">
+        </table>
+        <table tableName="inventory"
+               domainObjectName="Inventory">
+        </table>
+        <table tableName="priority"
+               domainObjectName="Priority">
+        </table>
+        <table tableName="teamwork_group"
+               domainObjectName="TeamworkGroup">
+        </table>
+        <table tableName="teamwork_member"
+               domainObjectName="TeamworkMember">
+        </table>
+        <table tableName="teamwork_message"
+               domainObjectName="TeamworkMessage">
+        </table>
+        <table tableName="teamwork_schedule"
+               domainObjectName="TeamworkSchedule">
+        </table>
+        <table tableName="teamwork_task"
+               domainObjectName="TeamworkTask">
+        </table>
+        <table tableName="user_setting"
+               domainObjectName="UserSetting">
+        </table>
+    </context>
+</generatorConfiguration>

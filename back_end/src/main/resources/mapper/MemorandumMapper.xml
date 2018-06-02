@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zeroyip.zero.mapper.MemorandumMapper" >
+  <resultMap id="BaseResultMap" type="com.zeroyip.zero.pojo.Memorandum" >
+    <id column="mem_num" property="memNum" jdbcType="INTEGER" />
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="mem_create_time" property="memCreateTime" jdbcType="DATE" />
+    <result column="mem_title" property="memTitle" jdbcType="VARCHAR" />
+    <result column="mem_content" property="memContent" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    mem_num, user_email, mem_create_time, mem_title, mem_content
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zeroyip.zero.pojo.MemorandumExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from memorandum
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from memorandum
+    where mem_num = #{memNum,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from memorandum
+    where mem_num = #{memNum,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zeroyip.zero.pojo.MemorandumExample" >
+    delete from memorandum
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zeroyip.zero.pojo.Memorandum" >
+    insert into memorandum (mem_num, user_email, mem_create_time, 
+      mem_title, mem_content)
+    values (#{memNum,jdbcType=INTEGER}, #{userEmail,jdbcType=VARCHAR}, #{memCreateTime,jdbcType=DATE}, 
+      #{memTitle,jdbcType=VARCHAR}, #{memContent,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zeroyip.zero.pojo.Memorandum" >
+    insert into memorandum
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="memNum != null" >
+        mem_num,
+      </if>
+      <if test="userEmail != null" >
+        user_email,
+      </if>
+      <if test="memCreateTime != null" >
+        mem_create_time,
+      </if>
+      <if test="memTitle != null" >
+        mem_title,
+      </if>
+      <if test="memContent != null" >
+        mem_content,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="memNum != null" >
+        #{memNum,jdbcType=INTEGER},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="memCreateTime != null" >
+        #{memCreateTime,jdbcType=DATE},
+      </if>
+      <if test="memTitle != null" >
+        #{memTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="memContent != null" >
+        #{memContent,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zeroyip.zero.pojo.MemorandumExample" resultType="java.lang.Integer" >
+    select count(*) from memorandum
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update memorandum
+    <set >
+      <if test="record.memNum != null" >
+        mem_num = #{record.memNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.userEmail != null" >
+        user_email = #{record.userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memCreateTime != null" >
+        mem_create_time = #{record.memCreateTime,jdbcType=DATE},
+      </if>
+      <if test="record.memTitle != null" >
+        mem_title = #{record.memTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.memContent != null" >
+        mem_content = #{record.memContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update memorandum
+    set mem_num = #{record.memNum,jdbcType=INTEGER},
+      user_email = #{record.userEmail,jdbcType=VARCHAR},
+      mem_create_time = #{record.memCreateTime,jdbcType=DATE},
+      mem_title = #{record.memTitle,jdbcType=VARCHAR},
+      mem_content = #{record.memContent,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zeroyip.zero.pojo.Memorandum" >
+    update memorandum
+    <set >
+      <if test="userEmail != null" >
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="memCreateTime != null" >
+        mem_create_time = #{memCreateTime,jdbcType=DATE},
+      </if>
+      <if test="memTitle != null" >
+        mem_title = #{memTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="memContent != null" >
+        mem_content = #{memContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where mem_num = #{memNum,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zeroyip.zero.pojo.Memorandum" >
+    update memorandum
+    set user_email = #{userEmail,jdbcType=VARCHAR},
+      mem_create_time = #{memCreateTime,jdbcType=DATE},
+      mem_title = #{memTitle,jdbcType=VARCHAR},
+      mem_content = #{memContent,jdbcType=VARCHAR}
+    where mem_num = #{memNum,jdbcType=INTEGER}
+  </update>
+
+  <select id="findMemorandum" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM memorandum
+    WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+  </select>
+
+  <insert id="addMemorandum">
+        INSERT INTO memorandum (mem_creation_time, mem_num
+      mem_title, mem_content)
+        VALUES (#{memCreationTime,jdbcType=DATE}, #{memorandumNum,jdbcType=INTEGER},
+      #{memTitle,jdbcType=VARCHAR}, #{memContent,jdbcType=VARCHAR})
+      WHERE user_email = {userEmail}
+    </insert>
+
+  <update id="patchMemorandum" parameterType="com.zeroyip.zero.pojo.User" >
+    UPDATE memorandum
+    <set >
+      <if test="Memorandum.memTitle != null" >
+        mem_title = #{todoNewContent.memTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="Memorandum.memContent != null" >
+        mem_content = #{todoNewContent.memContent,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE mem_num = #{memorandumNum,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteMemorandum" parameterType="java.lang.Integer">
+        DELETE
+        FROM memorandum
+        WHERE mem_num = #{memorandumNum,jdbcType=INTEGER}
+    </delete>
+</mapper>

@@ -1,0 +1,473 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zeroyip.zero.mapper.TodoMapper" >
+  <resultMap id="BaseResultMap" type="com.zeroyip.zero.pojo.Todo" >
+    <id column="todo_num" property="todoNum" jdbcType="INTEGER" />
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="todo_create_time" property="todoCreateTime" jdbcType="DATE" />
+    <result column="todo_content" property="todoContent" jdbcType="VARCHAR" />
+    <result column="todo_reminder_time" property="todoReminderTime" jdbcType="TIMESTAMP" />
+    <result column="inv_title" property="invTitle" jdbcType="VARCHAR" />
+    <result column="filter_content" property="filterContent" jdbcType="VARCHAR" />
+    <result column="priority_level" property="priorityLevel" jdbcType="VARCHAR" />
+    <result column="todo_finished_time" property="todoFinishedTime" jdbcType="TIMESTAMP" />
+    <result column="todo_finished" property="todoFinished" jdbcType="VARCHAR" />
+    <result column="todo_expired" property="todoExpired" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    todo_num, user_email, todo_create_time, todo_content, todo_reminder_time, inv_title, 
+    filter_content, priority_level, todo_finished_time, todo_finished, todo_expired
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zeroyip.zero.pojo.TodoExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from todo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from todo
+    where todo_num = #{todoNum,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from todo
+    where todo_num = #{todoNum,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zeroyip.zero.pojo.TodoExample" >
+    delete from todo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zeroyip.zero.pojo.Todo" >
+    insert into todo (todo_num, user_email, todo_create_time, 
+      todo_content, todo_reminder_time, inv_title, 
+      filter_content, priority_level, todo_finished_time, 
+      todo_finished, todo_expired)
+    values (#{todoNum,jdbcType=INTEGER}, #{userEmail,jdbcType=VARCHAR}, #{todoCreateTime,jdbcType=DATE}, 
+      #{todoContent,jdbcType=VARCHAR}, #{todoReminderTime,jdbcType=TIMESTAMP}, #{invTitle,jdbcType=VARCHAR}, 
+      #{filterContent,jdbcType=VARCHAR}, #{priorityLevel,jdbcType=VARCHAR}, #{todoFinishedTime,jdbcType=TIMESTAMP}, 
+      #{todoFinished,jdbcType=VARCHAR}, #{todoExpired,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zeroyip.zero.pojo.Todo" >
+    insert into todo
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="todoNum != null" >
+        todo_num,
+      </if>
+      <if test="userEmail != null" >
+        user_email,
+      </if>
+      <if test="todoCreateTime != null" >
+        todo_create_time,
+      </if>
+      <if test="todoContent != null" >
+        todo_content,
+      </if>
+      <if test="todoReminderTime != null" >
+        todo_reminder_time,
+      </if>
+      <if test="invTitle != null" >
+        inv_title,
+      </if>
+      <if test="filterContent != null" >
+        filter_content,
+      </if>
+      <if test="priorityLevel != null" >
+        priority_level,
+      </if>
+      <if test="todoFinishedTime != null" >
+        todo_finished_time,
+      </if>
+      <if test="todoFinished != null" >
+        todo_finished,
+      </if>
+      <if test="todoExpired != null" >
+        todo_expired,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="todoNum != null" >
+        #{todoNum,jdbcType=INTEGER},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="todoCreateTime != null" >
+        #{todoCreateTime,jdbcType=DATE},
+      </if>
+      <if test="todoContent != null" >
+        #{todoContent,jdbcType=VARCHAR},
+      </if>
+      <if test="todoReminderTime != null" >
+        #{todoReminderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invTitle != null" >
+        #{invTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="filterContent != null" >
+        #{filterContent,jdbcType=VARCHAR},
+      </if>
+      <if test="priorityLevel != null" >
+        #{priorityLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="todoFinishedTime != null" >
+        #{todoFinishedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="todoFinished != null" >
+        #{todoFinished,jdbcType=VARCHAR},
+      </if>
+      <if test="todoExpired != null" >
+        #{todoExpired,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zeroyip.zero.pojo.TodoExample" resultType="java.lang.Integer" >
+    select count(*) from todo
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update todo
+    <set >
+      <if test="record.todoNum != null" >
+        todo_num = #{record.todoNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.userEmail != null" >
+        user_email = #{record.userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.todoCreateTime != null" >
+        todo_create_time = #{record.todoCreateTime,jdbcType=DATE},
+      </if>
+      <if test="record.todoContent != null" >
+        todo_content = #{record.todoContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.todoReminderTime != null" >
+        todo_reminder_time = #{record.todoReminderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.invTitle != null" >
+        inv_title = #{record.invTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.filterContent != null" >
+        filter_content = #{record.filterContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.priorityLevel != null" >
+        priority_level = #{record.priorityLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.todoFinishedTime != null" >
+        todo_finished_time = #{record.todoFinishedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.todoFinished != null" >
+        todo_finished = #{record.todoFinished,jdbcType=VARCHAR},
+      </if>
+      <if test="record.todoExpired != null" >
+        todo_expired = #{record.todoExpired,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update todo
+    set todo_num = #{record.todoNum,jdbcType=INTEGER},
+      user_email = #{record.userEmail,jdbcType=VARCHAR},
+      todo_create_time = #{record.todoCreateTime,jdbcType=DATE},
+      todo_content = #{record.todoContent,jdbcType=VARCHAR},
+      todo_reminder_time = #{record.todoReminderTime,jdbcType=TIMESTAMP},
+      inv_title = #{record.invTitle,jdbcType=VARCHAR},
+      filter_content = #{record.filterContent,jdbcType=VARCHAR},
+      priority_level = #{record.priorityLevel,jdbcType=VARCHAR},
+      todo_finished_time = #{record.todoFinishedTime,jdbcType=TIMESTAMP},
+      todo_finished = #{record.todoFinished,jdbcType=VARCHAR},
+      todo_expired = #{record.todoExpired,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zeroyip.zero.pojo.Todo" >
+    update todo
+    <set >
+      <if test="userEmail != null" >
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="todoCreateTime != null" >
+        todo_create_time = #{todoCreateTime,jdbcType=DATE},
+      </if>
+      <if test="todoContent != null" >
+        todo_content = #{todoContent,jdbcType=VARCHAR},
+      </if>
+      <if test="todoReminderTime != null" >
+        todo_reminder_time = #{todoReminderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="invTitle != null" >
+        inv_title = #{invTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="filterContent != null" >
+        filter_content = #{filterContent,jdbcType=VARCHAR},
+      </if>
+      <if test="priorityLevel != null" >
+        priority_level = #{priorityLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="todoFinishedTime != null" >
+        todo_finished_time = #{todoFinishedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="todoFinished != null" >
+        todo_finished = #{todoFinished,jdbcType=VARCHAR},
+      </if>
+      <if test="todoExpired != null" >
+        todo_expired = #{todoExpired,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where todo_num = #{todoNum,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zeroyip.zero.pojo.Todo" >
+    update todo
+    set user_email = #{userEmail,jdbcType=VARCHAR},
+      todo_create_time = #{todoCreateTime,jdbcType=DATE},
+      todo_content = #{todoContent,jdbcType=VARCHAR},
+      todo_reminder_time = #{todoReminderTime,jdbcType=TIMESTAMP},
+      inv_title = #{invTitle,jdbcType=VARCHAR},
+      filter_content = #{filterContent,jdbcType=VARCHAR},
+      priority_level = #{priorityLevel,jdbcType=VARCHAR},
+      todo_finished_time = #{todoFinishedTime,jdbcType=TIMESTAMP},
+      todo_finished = #{todoFinished,jdbcType=VARCHAR},
+      todo_expired = #{todoExpired,jdbcType=VARCHAR}
+    where todo_num = #{todoNum,jdbcType=INTEGER}
+  </update>
+
+  <select id="findTodo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM todo
+    WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+    AND todo_finished = "N"
+    AND todo_expired = "N"
+    ORDER BY priority_level DESC, inv_title, todo_reminder_time
+  </select>
+
+  <select id="findFinishedTodo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM todo
+    WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+    AND todo_finished = "Y"
+    ORDER BY priority_level DESC, inv_title, todo_finished_time
+  </select>
+
+  <select id="findExpiredTodo" parameterType="java.lang.String" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM todo
+    WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+    AND todo_finished = "N"
+    AND todo_expired = "Y"
+    ORDER BY priority_level DESC, inv_title, todo_reminder_time
+  </select>
+
+  <select id="findTodoByDate" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM todo
+    WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+    AND DATE(todo_reminder_time) = #{date,jdbcType=VARCHAR}
+    AND todo_finished = "N"
+    AND todo_expired = "N"
+    ORDER BY priority_level DESC, inv_title, todo_reminder_time
+  </select>
+
+  <select id="findTodoByPri" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM todo
+    WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+    AND priority_level = #{priorityLevel,jdbcType=VARCHAR}
+    AND todo_finished = "N"
+    AND todo_expired = "N"
+    ORDER BY inv_title, todo_reminder_time
+  </select>
+
+  <select id="findExpiredTodoByPri" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM todo
+    WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+    AND priority_level = #{priorityLevel,jdbcType=VARCHAR}
+    AND todo_finished = "N"
+    AND todo_expired = "Y"
+    ORDER BY inv_title, todo_reminder_time
+  </select>
+
+  <select id="findTodoByInv" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM todo
+    WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+    AND inv_title = #{invTitle,jdbcType=VARCHAR}
+    AND todo_finished = "N"
+    AND todo_expired = "N"
+    ORDER BY priority_level DESC, todo_reminder_time
+  </select>
+
+  <select id="findExpiredTodoByInv" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM todo
+    WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+    AND inv_title = #{invTitle,jdbcType=VARCHAR}
+    AND todo_finished = "N"
+    AND todo_expired = "Y"
+    ORDER BY priority_level DESC, todo_reminder_time
+  </select>
+
+  <select id="searchTodo" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM todo
+    WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+    AND  todo_content LIKE concat(concat('%',#{todoContent}),'%')
+    AND todo_finished = "N"
+    AND todo_expired = "N"
+    ORDER BY priority_level DESC, todo_reminder_time
+  </select>
+
+  <select id="searchExpiredTodo" resultMap="BaseResultMap">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM todo
+    WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+    AND  todo_content LIKE concat(concat('%',#{todoContent}),'%')
+    AND todo_finished = "N"
+    AND todo_expired = "Y"
+    ORDER BY priority_level DESC, todo_reminder_time
+  </select>
+
+  <insert id="addTodo" parameterType="com.zeroyip.zero.pojo.Todo">
+        INSERT INTO todo (user_email, todo_create_time, todo_content, todo_reminder_time, inv_title, priority_level)
+        VALUES (#{userEmail,jdbcType=VARCHAR}, #{todoCreateTime,jdbcType=DATE}, #{todoContent,jdbcType=VARCHAR},
+      #{todoReminderTime,jdbcType=TIMESTAMP}, #{invTitle,jdbcType=VARCHAR}, #{priorityLevel,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="modifyTodo" parameterType="com.zeroyip.zero.pojo.User" >
+    UPDATE todo
+    <set >
+      <if test="todoNewContent.todoContent != null" >
+        todo_content = #{todoNewContent.todoContent,jdbcType=VARCHAR},
+      </if>
+      <if test="todoNewContent.todoReminderTime != null" >
+        todo_reminder_time = #{todoNewContent.todoReminderTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="todoNewContent.invTitle != null" >
+        inv_title = #{todoNewContent.invTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="todoNewContent.filterContent != null" >
+        filter_content = #{todoNewContent.filterContent,jdbcType=VARCHAR},
+      </if>
+      <if test="todoNewContent.priorityLevel != null" >
+        priority_level = #{todoNewContent.priorityLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="todoNewContent.todoFinishedTime != null" >
+        todo_finished_time = #{todoNewContent.todoFinishedTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="todoNewContent.todoFinished != null" >
+        todo_finished = #{todoNewContent.todoFinished,jdbcType=VARCHAR},
+      </if>
+      <if test="todoNewContent.todoExpired != null" >
+        todo_expired = #{todoNewContent.todoExpired,jdbcType=VARCHAR}
+      </if>
+    </set>
+    WHERE todo_num = #{todoNum,jdbcType=INTEGER}
+  </update>
+
+  <update id="finishTodo" parameterType="java.lang.Integer" >
+    UPDATE todo
+    SET todo_finished = "Y"
+    WHERE todo_num = #{todoNum,jdbcType=INTEGER}
+  </update>
+
+  <update id="recoverTodo" parameterType="java.lang.Integer" >
+    UPDATE todo
+    SET todo_finished = "N"
+    WHERE todo_num = #{todoNum,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteTodo" parameterType="java.lang.Integer">
+    DELETE
+    FROM todo
+    WHERE todo_num = #{todoNum,jdbcType=INTEGER}
+   </delete>
+
+  <delete id="deleteRedundancy" >
+    DELETE
+    FROM todo
+    WHERE todo_finished = "Y"
+  </delete>
+</mapper>

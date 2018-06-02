@@ -1,0 +1,209 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zeroyip.zero.mapper.InventoryMapper" >
+  <resultMap id="BaseResultMap" type="com.zeroyip.zero.pojo.Inventory" >
+    <id column="inv_num" property="invNum" jdbcType="INTEGER" />
+    <result column="user_email" property="userEmail" jdbcType="VARCHAR" />
+    <result column="inv_title" property="invTitle" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    inv_num, user_email, inv_title
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zeroyip.zero.pojo.InventoryExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from inventory
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select
+    <include refid="Base_Column_List" />
+    from inventory
+    where inv_num = #{invNum,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from inventory
+    where inv_num = #{invNum,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zeroyip.zero.pojo.InventoryExample" >
+    delete from inventory
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zeroyip.zero.pojo.Inventory" >
+    insert into inventory (inv_num, user_email, inv_title
+      )
+    values (#{invNum,jdbcType=INTEGER}, #{userEmail,jdbcType=VARCHAR}, #{invTitle,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.zeroyip.zero.pojo.Inventory" >
+    insert into inventory
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="invNum != null" >
+        inv_num,
+      </if>
+      <if test="userEmail != null" >
+        user_email,
+      </if>
+      <if test="invTitle != null" >
+        inv_title,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="invNum != null" >
+        #{invNum,jdbcType=INTEGER},
+      </if>
+      <if test="userEmail != null" >
+        #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="invTitle != null" >
+        #{invTitle,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zeroyip.zero.pojo.InventoryExample" resultType="java.lang.Integer" >
+    select count(*) from inventory
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update inventory
+    <set >
+      <if test="record.invNum != null" >
+        inv_num = #{record.invNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.userEmail != null" >
+        user_email = #{record.userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.invTitle != null" >
+        inv_title = #{record.invTitle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update inventory
+    set inv_num = #{record.invNum,jdbcType=INTEGER},
+      user_email = #{record.userEmail,jdbcType=VARCHAR},
+      inv_title = #{record.invTitle,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zeroyip.zero.pojo.Inventory" >
+    update inventory
+    <set >
+      <if test="userEmail != null" >
+        user_email = #{userEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="invTitle != null" >
+        inv_title = #{invTitle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where inv_num = #{invNum,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zeroyip.zero.pojo.Inventory" >
+    update inventory
+    set user_email = #{userEmail,jdbcType=VARCHAR},
+      inv_title = #{invTitle,jdbcType=VARCHAR}
+    where inv_num = #{invNum,jdbcType=INTEGER}
+  </update>
+
+  <select id="findInventory" parameterType="java.lang.String" resultMap="BaseResultMap">
+      SELECT *
+      FROM inventory
+      WHERE user_email = #{userEmail,jdbcType=VARCHAR}
+        AND inv_title != "无"
+  </select>
+
+  <insert id="addInventory" parameterType="com.zeroyip.zero.pojo.Inventory" >
+    INSERT INTO inventory (user_email, inv_title)
+    VALUES (#{userEmail,jdbcType=VARCHAR}, #{invTitle,jdbcType=VARCHAR})
+  </insert>
+
+  <update id="modifyInventory" parameterType="com.zeroyip.zero.pojo.Inventory" >
+    UPDATE inventory
+    <set >
+      <if test="invTitle != null" >
+        inv_title = #{invTitle,jdbcType=VARCHAR},
+      </if>
+    </set>
+    WHERE inv_num = #{invNum,jdbcType=INTEGER}
+  </update>
+
+  <delete id="deleteInventory" parameterType="java.lang.Integer">
+        DELETE
+        FROM inventory
+        WHERE inv_num = #{invNum,jdbcType=INTEGER}
+    </delete>
+</mapper>

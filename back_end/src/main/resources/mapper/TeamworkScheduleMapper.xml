@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zeroyip.zero.mapper.TeamworkScheduleMapper" >
+  <resultMap id="BaseResultMap" type="com.zeroyip.zero.pojo.TeamworkSchedule" >
+    <id column="sch_num" property="schNum" jdbcType="INTEGER" />
+    <result column="group_num" property="groupNum" jdbcType="INTEGER" />
+    <result column="sch_create_time" property="schCreateTime" jdbcType="DATE" />
+    <result column="sch_content" property="schContent" jdbcType="VARCHAR" />
+    <result column="sch_time" property="schTime" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    sch_num, group_num, sch_create_time, sch_content, sch_time
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zeroyip.zero.pojo.TeamworkScheduleExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from teamwork_schedule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from teamwork_schedule
+    where sch_num = #{schNum,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from teamwork_schedule
+    where sch_num = #{schNum,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zeroyip.zero.pojo.TeamworkScheduleExample" >
+    delete from teamwork_schedule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zeroyip.zero.pojo.TeamworkSchedule" >
+    insert into teamwork_schedule (sch_num, group_num, sch_create_time, 
+      sch_content, sch_time)
+    values (#{schNum,jdbcType=INTEGER}, #{groupNum,jdbcType=INTEGER}, #{schCreateTime,jdbcType=DATE}, 
+      #{schContent,jdbcType=VARCHAR}, #{schTime,jdbcType=DATE})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zeroyip.zero.pojo.TeamworkSchedule" >
+    insert into teamwork_schedule
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="schNum != null" >
+        sch_num,
+      </if>
+      <if test="groupNum != null" >
+        group_num,
+      </if>
+      <if test="schCreateTime != null" >
+        sch_create_time,
+      </if>
+      <if test="schContent != null" >
+        sch_content,
+      </if>
+      <if test="schTime != null" >
+        sch_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="schNum != null" >
+        #{schNum,jdbcType=INTEGER},
+      </if>
+      <if test="groupNum != null" >
+        #{groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="schCreateTime != null" >
+        #{schCreateTime,jdbcType=DATE},
+      </if>
+      <if test="schContent != null" >
+        #{schContent,jdbcType=VARCHAR},
+      </if>
+      <if test="schTime != null" >
+        #{schTime,jdbcType=DATE},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zeroyip.zero.pojo.TeamworkScheduleExample" resultType="java.lang.Integer" >
+    select count(*) from teamwork_schedule
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update teamwork_schedule
+    <set >
+      <if test="record.schNum != null" >
+        sch_num = #{record.schNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupNum != null" >
+        group_num = #{record.groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.schCreateTime != null" >
+        sch_create_time = #{record.schCreateTime,jdbcType=DATE},
+      </if>
+      <if test="record.schContent != null" >
+        sch_content = #{record.schContent,jdbcType=VARCHAR},
+      </if>
+      <if test="record.schTime != null" >
+        sch_time = #{record.schTime,jdbcType=DATE},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update teamwork_schedule
+    set sch_num = #{record.schNum,jdbcType=INTEGER},
+      group_num = #{record.groupNum,jdbcType=INTEGER},
+      sch_create_time = #{record.schCreateTime,jdbcType=DATE},
+      sch_content = #{record.schContent,jdbcType=VARCHAR},
+      sch_time = #{record.schTime,jdbcType=DATE}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zeroyip.zero.pojo.TeamworkSchedule" >
+    update teamwork_schedule
+    <set >
+      <if test="groupNum != null" >
+        group_num = #{groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="schCreateTime != null" >
+        sch_create_time = #{schCreateTime,jdbcType=DATE},
+      </if>
+      <if test="schContent != null" >
+        sch_content = #{schContent,jdbcType=VARCHAR},
+      </if>
+      <if test="schTime != null" >
+        sch_time = #{schTime,jdbcType=DATE},
+      </if>
+    </set>
+    where sch_num = #{schNum,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zeroyip.zero.pojo.TeamworkSchedule" >
+    update teamwork_schedule
+    set group_num = #{groupNum,jdbcType=INTEGER},
+      sch_create_time = #{schCreateTime,jdbcType=DATE},
+      sch_content = #{schContent,jdbcType=VARCHAR},
+      sch_time = #{schTime,jdbcType=DATE}
+    where sch_num = #{schNum,jdbcType=INTEGER}
+  </update>
+
+  <select id="listSchedule" resultMap="BaseResultMap" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM teamwork_schedule
+    WHERE group_num = #{groupNum,jdbcType=INTEGER}
+  </select>
+
+  <insert id="addSchedule" >
+    insert into teamwork_schedule (group_num, sch_content, sch_time)
+    values (#{groupNum,jdbcType=INTEGER}, #{schContent,jdbcType=VARCHAR}, #{schTime,jdbcType=DATE})
+  </insert>
+
+  <delete id="removeSchedule" parameterType="java.lang.Integer" >
+    DELETE
+    FROM teamwork_schedule
+    WHERE sch_num = #{schNum,jdbcType=INTEGER}
+  </delete>
+
+  <delete id="removeAllSchedule" parameterType="java.lang.Integer" >
+    DELETE
+    FROM teamwork_schedule
+    WHERE group_num = #{groupNum,jdbcType=INTEGER}
+  </delete>
+</mapper>

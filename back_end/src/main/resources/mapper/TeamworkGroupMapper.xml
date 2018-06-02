@@ -1,0 +1,222 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.zeroyip.zero.mapper.TeamworkGroupMapper" >
+  <resultMap id="BaseResultMap" type="com.zeroyip.zero.pojo.TeamworkGroup" >
+    <id column="group_num" property="groupNum" jdbcType="INTEGER" />
+    <result column="group_create_time" property="groupCreateTime" jdbcType="DATE" />
+    <result column="creator" property="creator" jdbcType="VARCHAR" />
+    <result column="group_name" property="groupName" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    group_num, group_create_time, creator, group_name
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.zeroyip.zero.pojo.TeamworkGroupExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from teamwork_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from teamwork_group
+    where group_num = #{groupNum,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from teamwork_group
+    where group_num = #{groupNum,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.zeroyip.zero.pojo.TeamworkGroupExample" >
+    delete from teamwork_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.zeroyip.zero.pojo.TeamworkGroup" >
+    insert into teamwork_group (group_num, group_create_time, creator, 
+      group_name)
+    values (#{groupNum,jdbcType=INTEGER}, #{groupCreateTime,jdbcType=DATE}, #{creator,jdbcType=VARCHAR}, 
+      #{groupName,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.zeroyip.zero.pojo.TeamworkGroup" >
+    insert into teamwork_group
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="groupNum != null" >
+        group_num,
+      </if>
+      <if test="groupCreateTime != null" >
+        group_create_time,
+      </if>
+      <if test="creator != null" >
+        creator,
+      </if>
+      <if test="groupName != null" >
+        group_name,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="groupNum != null" >
+        #{groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="groupCreateTime != null" >
+        #{groupCreateTime,jdbcType=DATE},
+      </if>
+      <if test="creator != null" >
+        #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null" >
+        #{groupName,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.zeroyip.zero.pojo.TeamworkGroupExample" resultType="java.lang.Integer" >
+    select count(*) from teamwork_group
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update teamwork_group
+    <set >
+      <if test="record.groupNum != null" >
+        group_num = #{record.groupNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.groupCreateTime != null" >
+        group_create_time = #{record.groupCreateTime,jdbcType=DATE},
+      </if>
+      <if test="record.creator != null" >
+        creator = #{record.creator,jdbcType=VARCHAR},
+      </if>
+      <if test="record.groupName != null" >
+        group_name = #{record.groupName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update teamwork_group
+    set group_num = #{record.groupNum,jdbcType=INTEGER},
+      group_create_time = #{record.groupCreateTime,jdbcType=DATE},
+      creator = #{record.creator,jdbcType=VARCHAR},
+      group_name = #{record.groupName,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.zeroyip.zero.pojo.TeamworkGroup" >
+    update teamwork_group
+    <set >
+      <if test="groupCreateTime != null" >
+        group_create_time = #{groupCreateTime,jdbcType=DATE},
+      </if>
+      <if test="creator != null" >
+        creator = #{creator,jdbcType=VARCHAR},
+      </if>
+      <if test="groupName != null" >
+        group_name = #{groupName,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where group_num = #{groupNum,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.zeroyip.zero.pojo.TeamworkGroup" >
+    update teamwork_group
+    set group_create_time = #{groupCreateTime,jdbcType=DATE},
+      creator = #{creator,jdbcType=VARCHAR},
+      group_name = #{groupName,jdbcType=VARCHAR}
+    where group_num = #{groupNum,jdbcType=INTEGER}
+  </update>
+
+  <insert id="createGroup" parameterType="com.zeroyip.zero.pojo.TeamworkGroup" >
+    INSERT INTO teamwork_group (group_create_time, creator, group_name)
+    VALUES (#{groupCreateTime,jdbcType=DATE}, #{creator,jdbcType=VARCHAR}, #{groupName,jdbcType=VARCHAR})
+  </insert>
+
+  <select id="listTeamworkGroup" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM teamwork_group
+    WHERE creator = #{userEmail,jdbcType=VARCHAR}
+    ORDER BY group_num DESC LIMIT 1
+  </select>
+
+  <select id="groupDetails" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM teamwork_group
+    WHERE group_num = #{groupNum,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteGroup" parameterType="java.lang.Integer" >
+    DELETE
+    FROM teamwork_group
+    WHERE group_num = #{groupNum,jdbcType=INTEGER}
+  </delete>
+</mapper>
